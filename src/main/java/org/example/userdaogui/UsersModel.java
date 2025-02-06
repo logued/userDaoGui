@@ -5,12 +5,12 @@ import org.example.userdaogui.DTOs.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowAllUsersModel {
+public class UsersModel {
 
 
     ArrayList<User> listOfUsers;    // model stores list of users
 
-    public ShowAllUsersModel(List<User> usersFromDaoRequest) {
+    public UsersModel(List<User> usersFromDaoRequest) {
         listOfUsers = new ArrayList<>(usersFromDaoRequest);  // clone the list
 
     }
