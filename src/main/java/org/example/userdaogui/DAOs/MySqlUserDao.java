@@ -1,4 +1,4 @@
-package org.example.usergui.DAOs;
+package org.example.userdaogui.DAOs;
 
 /**
  * OOP Feb 2024
@@ -19,8 +19,8 @@ package org.example.usergui.DAOs;
  * in the DAO layer.
  */
 
-import org.example.usergui.DTOs.User;
-import org.example.usergui.Exceptions.DaoException;
+import org.example.userdaogui.DTOs.User;
+import org.example.userdaogui.Exceptions.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

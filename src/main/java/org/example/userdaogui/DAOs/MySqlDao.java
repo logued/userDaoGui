@@ -1,4 +1,4 @@
-package org.example.usergui.DAOs;
+package org.example.userdaogui.DAOs;
 /** MySqlDao -
  * - implements functionality that is common to all MySQL DAOs
  * - i.e. getConection() and freeConnection()
@@ -8,7 +8,7 @@ package org.example.usergui.DAOs;
  *
  */
 
-import org.example.usergui.Exceptions.DaoException;
+import org.example.userdaogui.Exceptions.DaoException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

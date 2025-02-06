@@ -1,32 +1,30 @@
-package org.example.usergui.BusinessObjects;
+package org.example.userdaogui;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import org.example.usergui.DTOs.User;
+import javafx.scene.control.*;
+import org.example.userdaogui.DTOs.User;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ShowAllUsersController {
 
-
-
-    // dependency on the friends list Model
+    // dependency on the users Model
     private ShowAllUsersModel showAllUsersModel;
 
     @FXML
     public Label titleText;
+
     @FXML
-    public TextField nameTextField;
-    @FXML
-    public Button showFriendsButton;
+    public Button showUsersButton;
     @FXML
     public Button clearAllButton;
     @FXML
-    private ListView<String> listView;
+    private ListView<User> listViewOfUsers;    // list view of user, requires
+    // private ListView<String>;  //original for lists of Strings
+
     @FXML
     private Label messageLabel;
 
@@ -40,81 +38,84 @@ public class ShowAllUsersController {
     /// but initialize() does due to the sequence of execution.
     @FXML
     private void initialize() {
-        System.out.println("Initializing FriendsListController - initialize() called.");
-
-        // Set a listener to handle an "Enter" keypress on the name text field.
-        // This can't be done in the constructor as the nameTextField will not have
-        // been loaded, but initialize() is called after the UI controls are created.
-        //
-//        nameTextField.setOnKeyReleased(event -> {
-//            if (event.getCode() == KeyCode.ENTER){
-//                // find person and show their friends
-//                findPersonAndShowFriends();
-//            }
-//        });
+        System.out.println("Initializing controller - initialize() called. (not used in this sample)");
     }
 
     /// Event Listener i.e. a method that is called when some GUI event
-    /// happens. This method is called when the user clicks on the ShowFriends
+    /// happens. This method is called when the user clicks on the ShowUsers
     /// Button control.  The method is identified in the Button definition
     /// in the  friends-list-view.fxml file.
     /// <Button fx:id="showFriendsButton"
     ///         onAction="#onShowFriendsButtonClick" ...
     @FXML
     protected void onShowAllUsersButtonClick() {
-        showAllUsers();  //TODO
+        showAllUsers();
     }
 
-    /// Actions to be taken when user clicks on Show Friends button, or
-    /// presses ENTER when the cursor is in the TextField.
-    /// Extract the name from the TextField, search for the person,
-    /// if found, display the persons friends.
+    /// Actions to be taken when user clicks on Show Users button,
+    /// Call the getUsers() in the Model, and display the list of
+    /// users in a ListView.
     ///
     private void showAllUsers() {
 
         messageLabel.setText(""); // Blank out previous messages
 
-        //String name = nameTextField.getText();  // get the name to search for
-
-//        if( name==null || name.isEmpty() ) {
-//            messageLabel.setText("Please enter a name");
-//            listView.getItems().clear();  // clear listview
-//            return;
-//        }
-
-        /// Access the Model to retrieve the person's list of friends
+        /// Access the Model to retrieve the list of Users
         List<User> listOfUsers = showAllUsersModel.getUsers();
+
         if( listOfUsers==null || listOfUsers.isEmpty() ) {
             messageLabel.setText("No friends found");
-            listView.getItems().clear();
+            listViewOfUsers.getItems().clear();
             return;
         }
 
         /// Note that listView.getItems.clear() will clear not only the listview
         /// but also the list it is bound to.  This may not be what you intend so pay extra attention.
-        /// In this example, the Model (FriendsListModel) returns a clone(copy) of the
-        /// friends list, so when we clear the ListView, the *copy* of the friends list is also cleared,
-        /// but the underlying source of the friends list (in the Map) is not cleared, as this
-        /// controller class is dealing wit a copy of the list and has no access to the Map
-        /// or to its contents.  We have not leaked any references from our Model out to the GUI.
-        /// This is good practice.
 
         /// Convert the list into an Observable Array List (as required by ListView)
         /// and set the listView to display the list of friends.
         /// This binds the ListView to the underlying ArrayList.
         ///
-        listView.setItems((FXCollections.observableList(Collections.singletonList(listOfUsers.toString()))));
+
+        // List View deals with list of String automatically, so convert list of
+        // users into a list of String so that it can be displayed in ListView
+        //(This is not the ideal solution, but will suffice for the moment)  DL
+//        ArrayList<String> userListAsStrings = new ArrayList<String>();
+//
+//        for( User user : listOfUsers ) {
+//            userListAsStrings.add(user.toString());
+//        }
+//        listView.setItems((FXCollections.observableList(userListAsStrings)));
+
+        ObservableList<User> observableUserList = FXCollections.observableArrayList();
+        observableUserList.addAll(listOfUsers);
+
+        listViewOfUsers.setItems(observableUserList);   // bind ListView to the observable list
+
+        listViewOfUsers.setCellFactory(param -> new ListCell<User>() {
+            @Override
+            protected void updateItem(User item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getId() + ", " +item.getFirstName() + " " + item.getLastName());
+                }
+            }
+        });
+
     }
 
-    /// This Controller needs to get data from the FriendsListModel
+    /// This Controller needs to get data from the ShowAllUsersModel
     /// (which is known as the Model in the MODEL-VIEW-CONTROLLER Architecture)
     /// The model is instantiated in the main App and is passed into this controller
     /// as a dependency using the setModel() method below.
     /// This is called "Dependency Injection" (DI), because, instead of creating
-    /// the FriendsListModel here, we "inject" a reference to a Model that is
+    /// the Model here, we "inject" a reference to a Model that is
     /// created elsewhere. (This reduces the coupling between the two classes).
 
-    ///  Setter to inject the dependency on the Model - FriendsListModel class.
+    ///  Setter method to inject the dependency on the Model - ShowAllUsersModel class.
     ///
     public void setModel(ShowAllUsersModel showAllUsersModel) {
         this.showAllUsersModel = showAllUsersModel;
@@ -122,8 +123,7 @@ public class ShowAllUsersController {
 
     @FXML
     protected void onClearAllButtonClick() {
-        listView.getItems().clear();
-        nameTextField.clear();
+        listViewOfUsers.getItems().clear();
         messageLabel.setText("");
     }
 }

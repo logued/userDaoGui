@@ -1,4 +1,4 @@
-package org.example.usergui.DAOs;
+package org.example.userdaogui.DAOs;
 
 /** OOP Feb 2022
  * UserDaoInterface
@@ -19,8 +19,8 @@ package org.example.usergui.DAOs;
  * can be replaced by mock DAO objects.
  */
 
-import org.example.usergui.DTOs.User;
-import org.example.usergui.Exceptions.DaoException;
+import org.example.userdaogui.DTOs.User;
+import org.example.userdaogui.Exceptions.DaoException;
 
 import java.util.List;
 

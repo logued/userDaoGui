@@ -1,14 +1,14 @@
-package org.example.usergui.BusinessObjects;  // Feb 2025
+package org.example.userdaogui;  // Feb 2025
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.usergui.DAOs.MySqlUserDao;
-import org.example.usergui.DAOs.UserDaoInterface;
-import org.example.usergui.DTOs.User;
-import org.example.usergui.Exceptions.DaoException;
+import org.example.userdaogui.DAOs.MySqlUserDao;
+import org.example.userdaogui.DAOs.UserDaoInterface;
+import org.example.userdaogui.DTOs.User;
+import org.example.userdaogui.Exceptions.DaoException;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ShowAllUsersGUIApp extends Application {
     /// [javafx API](https://docs.oracle.com/javase/8/javafx/api/index.html?javafx/application/Application.html)
 
     public static void main(String[] args) {
-        launch(); // call static JavaFX Application method
+        launch(); // launch() is a static method defined in JavaFX Application class (inherited)
     }
 
     /// start() is called by the JavaFX runtime system, after our JavaFX Application
@@ -33,8 +33,7 @@ public class ShowAllUsersGUIApp extends Application {
     public void start(Stage stage) throws IOException {
 
         // get the FXML view resource
-       // FXMLLoader loader = new FXMLLoader(ShowAllUsersGUIApp.class.getResource("C:\\Users\\dermo\\IdeaProjects\\oop-data-access-layer-sample-1-GUI\\src\\main\\resources\\fxml\\userslistview.fxml"));
-        FXMLLoader loader = new FXMLLoader(ShowAllUsersGUIApp.class.getResource("../fxml/userslistview.fxml"));
+        FXMLLoader loader = new FXMLLoader(ShowAllUsersGUIApp.class.getResource("users-listview.fxml"));
 
         Parent root = loader.load();  // load in the root (Parent container) of UI, and instantiate the Controller
 

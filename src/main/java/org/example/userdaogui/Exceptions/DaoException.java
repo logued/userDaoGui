@@ -1,4 +1,4 @@
-package org.example.usergui.Exceptions;
+package org.example.userdaogui.Exceptions;
 
 /**     Feb 2022
  * A 'homemade' Exception to report exceptions

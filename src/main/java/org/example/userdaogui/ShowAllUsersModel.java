@@ -1,6 +1,6 @@
-package org.example.usergui.BusinessObjects;
+package org.example.userdaogui;
 
-import org.example.usergui.DTOs.User;
+import org.example.userdaogui.DTOs.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class ShowAllUsersModel {
     ArrayList<User> listOfUsers;    // model stores list of users
 
     public ShowAllUsersModel(List<User> usersFromDaoRequest) {
-        listOfUsers = new ArrayList<User>(usersFromDaoRequest);  // clone the list
+        listOfUsers = new ArrayList<>(usersFromDaoRequest);  // clone the list
 
     }
 

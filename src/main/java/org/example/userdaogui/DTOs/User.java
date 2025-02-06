@@ -1,4 +1,4 @@
-package org.example.usergui.DTOs;
+package org.example.userdaogui.DTOs;
 
 /**                                                     OOP Feb 2022
  *  Data Transfer Object (DTO)
