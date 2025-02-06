@@ -82,7 +82,8 @@ public class UsersController {
         /// and set the listView to display the list of (selected) User data.
         /// This binds the ListView to the underlying ArrayList.
         /// Once bound, then any change to the ObservableArrayList
-        /// will be reflected (updated) in the ListView.
+        /// will be observed by the ListView and the ListView will
+        ///  be updated to reflect the change.
 
 //        // List View deals with list of String automatically, so convert list of
 //        // users into a list of String so that it can be displayed in ListView
@@ -103,17 +104,19 @@ public class UsersController {
         /// extract selected field values, and assemble them into individual Strings
         /// to be added into the ListView.
         ///
-        listViewOfUsers.setCellFactory(param -> new ListCell<User>() {
-            @Override
-            protected void updateItem(User item, boolean empty) {
-                super.updateItem(item, empty);
+        listViewOfUsers.setCellFactory(param -> {
+            return new ListCell<User>() {
+                @Override
+                protected void updateItem(User item, boolean empty) {
+                    super.updateItem(item, empty);
 
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getId() + ", " +item.getFirstName() + " " + item.getLastName());
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getId() + ", " + item.getFirstName() + " " + item.getLastName());
+                    }
                 }
-            }
+            };
         });
     }
 
