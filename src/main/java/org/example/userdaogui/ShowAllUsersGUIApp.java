@@ -47,7 +47,7 @@ public class ShowAllUsersGUIApp extends Application {
             UsersModel usersModel = new UsersModel(users);
             /// Get a reference to the Controller.  The controller for the App
             /// was declared in the FXML code and was instantiated (created) by JavaFX.
-            ShowAllUsersController controller = loader.getController();  // get a reference to the controller
+            UsersController controller = loader.getController();  // get a reference to the controller
             controller.setModel(usersModel); // Inject Dependency (dependency on the Model)
 
         } catch (DaoException e) {

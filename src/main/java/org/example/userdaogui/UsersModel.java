@@ -1,27 +1,34 @@
-package org.example.userdaogui;
+package org.example.userdaogui;     // Feb 2025
 
 import org.example.userdaogui.DTOs.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The UsersModel class stores the users data in a list.
+ * This is the source of user data for the Controller.
+ * When this class is instantiated, it is passed into the Controller
+ * so that the Controller can access the user data.
+ */
 public class UsersModel {
 
+    private final ArrayList<User> listOfUsers;    // model stores a list of all users
 
-    ArrayList<User> listOfUsers;    // model stores list of users
-
+    /**
+     * Constructor accepts a reference to a list of User objects
+     * and stores that reference.
+     * @param usersFromDaoRequest List of User
+     */
     public UsersModel(List<User> usersFromDaoRequest) {
         listOfUsers = new ArrayList<>(usersFromDaoRequest);  // clone the list
-
     }
 
     /**
-     * @param personsName name of person whose friends we want to access
-     * @return List of friends names or null (a clone copy of the list is returned)
+     * @return List of User or null
      */
     public List<User> getUsers() {
-
-        return new ArrayList<>(listOfUsers);  // clone(copy) the list to prevent reference leakage
+        return listOfUsers;
     }
 
 }

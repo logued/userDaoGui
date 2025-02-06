@@ -7,7 +7,7 @@ import org.example.userdaogui.DTOs.User;
 
 import java.util.List;
 
-public class ShowAllUsersController {
+public class UsersController {
 
     // dependency on the users Model
     private UsersModel usersModel;
@@ -28,7 +28,7 @@ public class ShowAllUsersController {
 
     /// Constructor for this Controller (required by JavaFX to create the controller.)
     ///
-    public ShowAllUsersController() {
+    public UsersController() {
     }
 
     /// The Constructor is called first, then @FXML fields are populated,
@@ -56,7 +56,7 @@ public class ShowAllUsersController {
     ///
     private void showAllUsers() {
 
-        messageLabel.setText(""); // Blank out previous messages
+        messageLabel.setText("showAllUsers() was called."); // Blank out previous messages
 
         /// Access the Model to retrieve the list of Users
         List<User> listOfUsers = usersModel.getUsers();
@@ -132,8 +132,8 @@ public class ShowAllUsersController {
     }
 
     @FXML
-    protected void onClearAllButtonClick() {
+    protected void onClearListButtonClick() {
         listViewOfUsers.getItems().clear();
-        messageLabel.setText("");
+        messageLabel.setText("Users list has been cleared.");
     }
 }
