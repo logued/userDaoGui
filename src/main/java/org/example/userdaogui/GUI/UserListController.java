@@ -1,4 +1,4 @@
-package org.example.userdaogui;
+package org.example.userdaogui.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,10 +7,10 @@ import org.example.userdaogui.DTOs.User;
 
 import java.util.List;
 
-public class UsersController {
+public class UserListController {
 
     // dependency on the users Model
-    private UsersModel usersModel;
+    private UserListModel userListModel;
 
     @FXML
     public Label titleText;
@@ -28,7 +28,7 @@ public class UsersController {
 
     /// Constructor for this Controller (required by JavaFX to create the controller.)
     ///
-    public UsersController() {
+    public UserListController() {
     }
 
     /// The Constructor is called first, then @FXML fields are populated,
@@ -59,7 +59,7 @@ public class UsersController {
         messageLabel.setText("showAllUsers() was called."); // Blank out previous messages
 
         /// Access the Model to retrieve the list of Users
-        List<User> listOfUsers = usersModel.getUsers();
+        List<User> listOfUsers = userListModel.getUsers();
 
         if( listOfUsers==null || listOfUsers.isEmpty() ) {
             messageLabel.setText("No friends found");
@@ -124,7 +124,7 @@ public class UsersController {
         });
     }
 
-    /// This Controller gets data from the UsersModel
+    /// This Controller gets data from the UserListModel
     /// (which is known as the Model in the MODEL-VIEW-CONTROLLER Architecture)
     /// The model is instantiated in the main App and is passed into this controller
     /// as a dependency using the setModel() method below.
@@ -132,10 +132,10 @@ public class UsersController {
     /// the Model here, we "inject" a reference to a Model that is
     /// created elsewhere. (This reduces the coupling between the two classes).
 
-    ///  Setter method to inject the dependency on the Model - UsersModel class.
+    ///  Setter method to inject the dependency on the Model - UserListModel class.
     ///
-    public void setModel(UsersModel usersModel) {
-        this.usersModel = usersModel;
+    public void setModel(UserListModel userListModel) {
+        this.userListModel = userListModel;
     }
 
     @FXML

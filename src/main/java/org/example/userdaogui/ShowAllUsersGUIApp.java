@@ -9,6 +9,8 @@ import org.example.userdaogui.DAOs.MySqlUserDao;
 import org.example.userdaogui.DAOs.UserDaoInterface;
 import org.example.userdaogui.DTOs.User;
 import org.example.userdaogui.Exceptions.DaoException;
+import org.example.userdaogui.GUI.UserListController;
+import org.example.userdaogui.GUI.UserListModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,18 +39,18 @@ public class ShowAllUsersGUIApp extends Application {
 
         Parent root = loader.load();  // load in the root (Parent container) of UI, and instantiate the Controller
 
-        /// Create the UsersModel (The Model), populate it with users list from DAO,
+        /// Create the UserListModel (The Model), populate it with users list from DAO,
         /// and inject the Model into the Controller (i.e. pass in a reference
         /// to the Model so that the Controller can access it.) (Dependency Injection!)
 
         UserDaoInterface IUserDao = new MySqlUserDao();  //"IUserDao" -> "I" stands for Interface
         try {
             List<User> users = IUserDao.findAllUsers();
-            UsersModel usersModel = new UsersModel(users);
+            UserListModel userListModel = new UserListModel(users);
             /// Get a reference to the Controller.  The controller for the App
             /// was declared in the FXML code and was instantiated (created) by JavaFX.
-            UsersController controller = loader.getController();  // get a reference to the controller
-            controller.setModel(usersModel); // Inject Dependency (dependency on the Model)
+            UserListController controller = loader.getController();  // get a reference to the controller
+            controller.setModel(userListModel); // Inject Dependency (dependency on the Model)
 
         } catch (DaoException e) {
             throw new RuntimeException(e);
