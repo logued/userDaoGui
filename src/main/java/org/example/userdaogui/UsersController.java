@@ -100,9 +100,13 @@ public class UsersController {
 
         listViewOfUsers.setItems(observableUserList);   // bind ListView to the observable list
 
-        /// CellFactory is used to access User elements from a list,
-        /// extract selected field values, and assemble them into individual Strings
-        /// to be added into the ListView.
+        /// Defines a CellFactory for use by the ListViewOfUsers control.
+        /// The Cell Factory defines an updateItem() method to convert and format
+        /// each User element from the ObservableList<User> into type String.
+        /// It is here that we can select the fields that we wish to display,
+        /// and format them in whatever way we wish.
+        /// Here, we select fields firstName and lastName only, and assemble them
+        /// into individual Strings to be added into the ListView.
         ///
         listViewOfUsers.setCellFactory(param -> {
             return new ListCell<User>() {
@@ -113,7 +117,7 @@ public class UsersController {
                     if (empty || item == null) {
                         setText(null);
                     } else {
-                        setText(item.getId() + ", " + item.getFirstName() + " " + item.getLastName());
+                        setText(item.getFirstName() + " " + item.getLastName());
                     }
                 }
             };
