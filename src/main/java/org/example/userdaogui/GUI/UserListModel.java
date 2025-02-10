@@ -1,6 +1,9 @@
 package org.example.userdaogui.GUI;     // Feb 2025
 
+import org.example.userdaogui.DAOs.MySqlUserDao;
+import org.example.userdaogui.DAOs.UserDaoInterface;
 import org.example.userdaogui.DTOs.User;
+import org.example.userdaogui.Exceptions.DaoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,22 +16,35 @@ import java.util.List;
  */
 public class UserListModel {
 
-    private final ArrayList<User> listOfUsers;    // model stores a list of all users
+    private List<User> listOfUsers;    // model stores a list of all users
 
     /**
-     * Constructor accepts a reference to a list of User objects
-     * and stores that reference.
-     * @param usersFromDaoRequest List of User
+     * Constructor accepts a reference to a
      */
-    public UserListModel(List<User> usersFromDaoRequest) {
-        listOfUsers = new ArrayList<>(usersFromDaoRequest);  // clone the list
+    public UserListModel() {
     }
 
     /**
-     * @return List of User or null
+     *  Load Users from DAO
      */
-    public List<User> getUsers() {
-        return listOfUsers;
+    public void loadUsers() {
+
+        /// Create the UserListModel (The Model), populate it with users list from DAO,
+        /// and inject the Model into the Controller (i.e. pass in a reference
+        /// to the Model so that the Controller can access it.) (Dependency Injection!)
+
+        UserDaoInterface IUserDao = new MySqlUserDao();  //"IUserDao" -> "I" stands for Interface
+        try {
+            this.listOfUsers = IUserDao.findAllUsers();
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+
+        //return listOfUsers;
+    }
+
+    public List<User> getListOfUsers() {
+        return new ArrayList<>(this.listOfUsers);   // clone/copy of the list
     }
 
 }

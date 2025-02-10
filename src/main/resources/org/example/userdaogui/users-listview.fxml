@@ -8,6 +8,11 @@
     accessible in the associated controller.
     Use the [Scene Builder] tab at the bottom to switch to the
     screen builder tool.
+
+    Note that the Controller class that uses the UI Controls in this
+    FXML file is identified in the code.
+    ......fx:controller="org.example.userdaogui.GUI.UserListController"
+    This Controller will be instantiated by the JavaFX system.
  -->
 
 <?import javafx.geometry.*?>
@@ -39,7 +44,7 @@
             text="Get All Users"/>
 
     <VBox prefHeight="200.0" prefWidth="100.0">
-        <ListView id="listView"
+        <ListView id="listViewOfUsers"
                   fx:id="listViewOfUsers"
                   minHeight="-Infinity"
                   prefHeight="200.0"
@@ -50,9 +55,11 @@
         </ListView>
     </VBox>
 
-    <Button fx:id="clearAllButton" onAction="#onClearListButtonClick" text="Clear the list"/>
+    <Button fx:id="clearAllButton"
+            onAction="#onClearListButtonClick" text="Clear the list"/>
 
     <Label prefHeight="18.0" prefWidth="379.0" text="Messages:"/>
-    <Label fx:id="messageLabel" prefHeight="18.0" prefWidth="378.0" text="Event messages display here..."/>
+    <Label fx:id="messageLabel" prefHeight="18.0" prefWidth="378.0"
+           text="Event messages display here..."/>
 
 </VBox>
