@@ -6,6 +6,9 @@
     containers and controls called Nodes in JavaFX.
     This file is read by JavaFX and turned into java objects which are
     accessible in the associated controller.
+    The UI Control objects are "Dependency Injected" into the controller by
+    setting the @FXML annotated instance fields to refer to the UI Controls
+    matched by their names.
     Use the [Scene Builder] tab at the bottom to switch to the
     screen builder tool.
 
