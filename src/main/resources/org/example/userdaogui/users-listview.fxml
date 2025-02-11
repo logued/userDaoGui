@@ -35,6 +35,11 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
+    <Label fx:id="info" text="(Remember to start XAMPP-MySQL Server)" textFill="GREEN">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </Label>
     <Label fx:id="titleText" text="Users" textFill="BLUE">
         <font>
             <Font size="24.0"/>
