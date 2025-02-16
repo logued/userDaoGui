@@ -1,11 +1,14 @@
 package org.example.userdaogui.GUI;     // Feb 2025
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.example.userdaogui.DAOs.MySqlUserDao;
 import org.example.userdaogui.DAOs.UserDaoInterface;
 import org.example.userdaogui.DTOs.User;
 import org.example.userdaogui.Exceptions.DaoException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,35 +19,51 @@ import java.util.List;
  */
 public class UserListModel {
 
-    private List<User> listOfUsers;    // model stores a list of all users
+    private List<User> listOfUsers;    // model stores a list of all users (Domain Objects)
+
+    // This model holds the ObservableList that will be bound to the LIstView UI Control in the View
+    ObservableList<User> observableListOfUsers;    // observable List (a Property)
 
     /**
-     * Constructor accepts a reference to a
+     * Constructor - populates model with data from DAO
      */
     public UserListModel() {
+        /// Create an Observable Array List (as required by ListView)
+        this.observableListOfUsers = FXCollections.observableArrayList();
     }
 
     /**
-     *  Load Users from DAO
+     * Get List of Users using DAO, and populate the ObservableList from the list returned.
      */
-    public void loadUsers() {
-
-        /// Create the UserListModel (The Model), populate it with users list from DAO,
-        /// and inject the Model into the Controller (i.e. pass in a reference
-        /// to the Model so that the Controller can access it.) (Dependency Injection!)
-
+    private void populateListsUsingDao() {
         UserDaoInterface IUserDao = new MySqlUserDao();  //"IUserDao" -> "I" stands for Interface
         try {
             this.listOfUsers = IUserDao.findAllUsers();
+
+            if(this.listOfUsers != null) {
+                /// Populate the ObservableList from the List
+                this.observableListOfUsers.addAll(listOfUsers);
+            }
         } catch (DaoException e) {
             throw new RuntimeException(e);
         }
-
-        //return listOfUsers;
     }
 
-    public List<User> getListOfUsers() {
-        return new ArrayList<>(this.listOfUsers);   // clone/copy of the list
+    public void reloadUserListModel() {
+        this.observableListOfUsers.clear(); // wipe out existing elements
+        populateListsUsingDao();
     }
+
+    public void sortUserList(Comparator<User> comparator) {
+        this.observableListOfUsers.sort(comparator);
+    }
+
+    public ObservableList<User> getObservableListOfUsers() {
+
+        return this.observableListOfUsers;
+    }
+
+
+
 
 }

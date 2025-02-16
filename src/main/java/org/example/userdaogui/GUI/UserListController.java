@@ -27,8 +27,8 @@ public class UserListController {
     private Label messageLabel;
 
     /// Constructor for this Controller (required by JavaFX to create the controller.)
-    /// Instantiate ethe Model and keep a reference to it.
-    /// ///
+    /// Instantiate the Model and keep a reference to it.
+    ///
     public UserListController() {
         this.userListModel = new UserListModel();
     }
@@ -36,15 +36,16 @@ public class UserListController {
     /// The Constructor is called first, then @FXML fields are populated,
     /// then initialize() is called. Constructor has no access to FXML fields,
     /// but initialize() does, due to the sequence of execution.
-    /// So, this is where we initialize UI Controls if necessary.
+    /// So, this is where we initialize UI Controls (after their creation) if necessary.
     @FXML
     private void initialize() {
         System.out.println("Initializing controller - initialize() called. (not used in this sample)");
     }
 
-    /// Event Listener i.e. a method that is called when some GUI event
-    /// happens. This method is called when the user clicks on the ShowUsers
-    /// Button control.  The method is identified in the Button definition
+    /// Event Handler (or Event Listener)
+    ///  i.e. a method that is called when some GUI event happens.
+    /// This method is called when the user clicks on the ShowUsers Button.
+    /// The method is identified in the Button definition
     /// in the  users-listview.fxml file.
     /// <Button fx:id="showUsersButton"
     ///         onAction="#onShowAllUsersButtonClick" ...
@@ -54,38 +55,19 @@ public class UserListController {
         /// Actions to be taken when user clicks on Show Users button
         messageLabel.setText("onShowAllUsersButtonClick() was called."); // Blank out previous messages
 
-        /// request the Model to load and store the list of Users from DAO
-        userListModel.loadUsers();
-
-        ///  get a copy of the User list
-        List<User> listOfUsers = userListModel.getListOfUsers();
-
-        if (listOfUsers == null || listOfUsers.isEmpty()) {
-            messageLabel.setText("No Users found.");
-            listViewOfUsers.getItems().clear();
-            return;
-        }
-
         ///  Sort the user list in ascending order of first name.
-        ///  Data from the Model can be manipulated in any way at this point,
+        ///  Data from the Model can be manipulated in any way,
         ///  before it is displayed in a ListView UI Control
-        listOfUsers.sort( Comparator.comparing(User::getFirstName) );
 
-        /// Convert the list into an Observable Array List (as required by ListView)
-        /// and set the ListView to display the list of (selected) User data.
-        /// This code binds the ListView to the underlying ArrayList.
-        /// Once bound, then any changes to the ObservableArrayList
-        /// will be observed by the ListView, and the ListView will
-        /// be updated to reflect those changes.
-        ///
-        ObservableList<User> observableUserList = FXCollections.observableArrayList();
-        observableUserList.addAll(listOfUsers);
+        userListModel.reloadUserListModel();
+        userListModel.sortUserList( Comparator.comparing(User::getFirstName) );
 
-        // Bind the ListView UI Control to the ObservableList.
-        // Once bound together:
-        // Updates to the ObservableList will automatically be reflected in the ListView.
-        // Updates to the ListView will be automatically reflected in the underlying ObservableList
-        listViewOfUsers.setItems(observableUserList);   // bind ListView to the observable list
+        /// Bind the ListView UI Control to the ObservableList.
+        /// Once bound together:
+        ///  - Updates to the ObservableList will automatically be reflected in the ListView.
+        ///  - Updates to the ListView will be automatically reflected in the underlying ObservableList
+
+        listViewOfUsers.setItems(userListModel.getObservableListOfUsers());
 
         /// Defines a CellFactory for use by the ListViewOfUsers control.
         /// The Cell Factory defines an updateItem() method to convert and format
@@ -114,10 +96,10 @@ public class UserListController {
 
     @FXML
     protected void onClearListButtonClick() {
-        listViewOfUsers.getItems().clear();  // clears ListView and the underlying list
-        messageLabel.setText("Users list has been cleared.");
+        listViewOfUsers.getItems().clear();  // clears ListView
+        messageLabel.setText("ListView has been cleared.");
         /// Note that listView.getItems.clear() will clear not only the ListView
-        /// but also the list it is bound to. i.e. the observableUserList.
+        /// but also the list it is bound to. i.e. the observableListOfUsers.
 
     }
 }
